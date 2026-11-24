@@ -1,26 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ArrowRight, Mail, Sparkles, Terminal, Code2, Bot, Award, MapPin, Box, UserCheck } from 'lucide-react';
+import { ArrowRight, Mail, Code2, Bot, Award, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/SocialIcons';
 import { usePortfolio } from '@/context/PortfolioContext';
 import { Button } from '@/components/ui/Button';
-import AvatarFallback from '@/components/3d/AvatarFallback';
-
-// Lazy-load the 3D WebGL Scene dynamically (no SSR)
-const AvatarScene = dynamic(() => import('@/components/3d/AvatarScene'), {
-  ssr: false,
-  loading: () => <AvatarFallback message="Initializing WebGL 3D Studio..." />,
-});
 
 export default function Hero() {
   const { data } = usePortfolio();
   const { personalInfo } = data;
   const { availability } = personalInfo;
   const [imageError, setImageError] = useState(false);
-  const [viewMode, setViewMode] = useState<'3d' | 'photo'>('3d');
 
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
@@ -144,119 +135,35 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: Interactive 3D Avatar WebGL Experience */}
-          <div className="lg:col-span-5 flex flex-col items-center">
-            {/* View Mode Switcher Pill */}
-            <div className="mb-3 flex items-center gap-1 p-1 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs backdrop-blur-md">
-              <button
-                onClick={() => setViewMode('3d')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
-                  viewMode === '3d'
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                <Box className="w-3.5 h-3.5 text-blue-300" />
-                <span>3D Human Avatar</span>
-              </button>
-
-              <button
-                onClick={() => setViewMode('photo')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-medium transition-all ${
-                  viewMode === 'photo'
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                <UserCheck className="w-3.5 h-3.5" />
-                <span>Photo Profile</span>
-              </button>
-            </div>
-
-            {/* Main Interactive Stage */}
-            <div className="relative w-full max-w-sm sm:max-w-md">
-              {viewMode === '3d' ? (
-                /* Real Interactive WebGL 3D Avatar Scene */
-                <AvatarScene />
+          {/* Right Column: Direct Portrait Photograph */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end items-center">
+            <div className="relative w-full max-w-[320px] sm:max-w-[380px] md:max-w-[420px] lg:max-w-[460px] flex items-center justify-center">
+              {!imageError ? (
+                <Image
+                  src="/images/profile.jpg"
+                  alt={personalInfo.name}
+                  width={1199}
+                  height={1312}
+                  priority
+                  quality={95}
+                  sizes="(max-width: 640px) 320px, (max-width: 768px) 380px, (max-width: 1024px) 420px, 460px"
+                  className="w-full h-auto object-contain pointer-events-none select-none"
+                  style={{
+                    maskImage:
+                      'radial-gradient(ellipse 100% 105% at 50% 42%, black 78%, rgba(0, 0, 0, 0.85) 90%, transparent 100%)',
+                    WebkitMaskImage:
+                      'radial-gradient(ellipse 100% 105% at 50% 42%, black 78%, rgba(0, 0, 0, 0.85) 90%, transparent 100%)',
+                  }}
+                  onError={() => setImageError(true)}
+                />
               ) : (
-                /* Traditional Photo Profile Card */
-                <div className="relative rounded-3xl bg-zinc-900/90 border border-zinc-800/90 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl">
-                  {/* Window header */}
-                  <div className="flex items-center justify-between pb-6 mb-6 border-b border-zinc-800">
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                      <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                      <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400 bg-zinc-800/60 px-2.5 py-1 rounded-md">
-                      <Terminal className="w-3 h-3 text-blue-400" />
-                      <span>lahiruranathunga.dev</span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col items-center text-center space-y-4">
-                    <div className="relative group">
-                      <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-700 p-1 shadow-2xl shadow-blue-500/20 overflow-hidden">
-                        <div className="w-full h-full rounded-2xl bg-zinc-950 flex flex-col items-center justify-center text-center overflow-hidden relative">
-                          {!imageError ? (
-                            <Image
-                              src="/images/profile.jpg"
-                              alt="R. J. K. Lahiru Madhushan Ranathunga"
-                              width={160}
-                              height={160}
-                              className="w-full h-full object-cover rounded-2xl"
-                              onError={() => setImageError(true)}
-                              priority
-                            />
-                          ) : (
-                            <div className="w-full h-full flex flex-col items-center justify-center p-3 relative">
-                              <div className="absolute inset-0 bg-gradient-to-b from-blue-600/10 to-transparent pointer-events-none" />
-                              <span className="text-4xl font-extrabold font-mono text-gradient-vibrant tracking-tighter">
-                                LR
-                              </span>
-                              <span className="text-[10px] text-zinc-400 font-mono mt-1 uppercase tracking-widest">
-                                Dev Portfolio
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-emerald-950/90 border border-emerald-500/40 text-[11px] font-medium text-emerald-300 flex items-center gap-1 shadow-md">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>Active</span>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h3 className="text-lg font-bold text-white tracking-tight">
-                        {personalInfo.shortName}
-                      </h3>
-                      <p className="text-xs text-zinc-400 font-mono">
-                        Wayamba University of Sri Lanka
-                      </p>
-                    </div>
-
-                    {/* Highlights mini grid */}
-                    <div className="w-full grid grid-cols-2 gap-2 pt-2 text-left">
-                      <div className="p-3 rounded-xl bg-zinc-800/40 border border-zinc-800/60">
-                        <div className="text-[10px] text-zinc-400 uppercase font-mono tracking-wider">
-                          Leadership
-                        </div>
-                        <div className="text-xs font-semibold text-zinc-200 mt-0.5">
-                          IEEE Student Branch
-                        </div>
-                      </div>
-                      <div className="p-3 rounded-xl bg-zinc-800/40 border border-zinc-800/60">
-                        <div className="text-[10px] text-zinc-400 uppercase font-mono tracking-wider">
-                          Initiative
-                        </div>
-                        <div className="text-xs font-semibold text-zinc-200 mt-0.5">
-                          ZeroPlastic Wayamba
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="w-full aspect-square flex flex-col items-center justify-center p-6 text-center">
+                  <span className="text-6xl font-extrabold font-mono text-gradient-vibrant tracking-tighter">
+                    LR
+                  </span>
+                  <span className="text-sm text-zinc-400 font-mono mt-2 uppercase tracking-widest">
+                    {personalInfo.shortName}
+                  </span>
                 </div>
               )}
             </div>
