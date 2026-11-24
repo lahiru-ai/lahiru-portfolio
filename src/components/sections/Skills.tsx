@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Cpu, Search, Layers, CheckCircle2, Sparkles, Filter } from 'lucide-react';
+import { Cpu, Search, CheckCircle2 } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Card } from '@/components/ui/Card';
 
 export default function Skills() {
   const { data } = usePortfolio();
@@ -11,12 +13,12 @@ export default function Skills() {
 
   const categories = [
     { id: 'all', label: 'All Disciplines' },
-    { id: 'programming', label: 'Programming' },
-    { id: 'frontend', label: 'Frontend' },
-    { id: 'backend', label: 'Backend' },
+    { id: 'programming', label: 'Programming Languages' },
+    { id: 'frontend', label: 'Frontend Development' },
+    { id: 'backend', label: 'Backend Development' },
     { id: 'database', label: 'Databases' },
-    { id: 'tools', label: 'Tools & DevOps' },
-    { id: 'ai', label: 'Artificial Intelligence' },
+    { id: 'ai', label: 'AI & Machine Learning' },
+    { id: 'tools', label: 'Development Tools' },
   ];
 
   const filteredCategories = data.skills.filter((cat) => {
@@ -31,28 +33,24 @@ export default function Skills() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-mono text-indigo-400">
-              <Cpu className="w-3.5 h-3.5" />
-              <span>02 / TECHNICAL ARSENAL</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Skills &amp; Technologies
-            </h2>
-            <p className="text-zinc-400 text-sm sm:text-base max-w-xl">
-              Pragmatic proficiencies acquired through undergraduate coursework, open-source development, and real-world implementations.
-            </p>
-          </div>
+          <SectionHeading
+            badgeText="02 / TECHNICAL ARSENAL"
+            badgeVariant="purple"
+            icon={<Cpu className="w-3.5 h-3.5" />}
+            title="Skills & Technologies"
+            subtitle="Pragmatic proficiencies acquired through university coursework, open-source projects, and hands-on implementations."
+            className="mb-0"
+          />
 
           {/* Search bar */}
           <div className="relative w-full md:w-72">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
             <input
               type="text"
-              placeholder="Search skill (e.g. Next.js, Python)..."
+              placeholder="Search skill (e.g. Next.js, Java)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl bg-zinc-900/80 border border-zinc-800 text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl bg-zinc-900/80 border border-zinc-800 text-zinc-200 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
           </div>
         </div>
@@ -85,9 +83,10 @@ export default function Skills() {
             if (visibleSkills.length === 0) return null;
 
             return (
-              <div
+              <Card
                 key={cat.category}
-                className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between"
+                variant="glass"
+                className="p-6 sm:p-7 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -147,7 +146,7 @@ export default function Skills() {
                     {cat.category}
                   </span>
                 </div>
-              </div>
+              </Card>
             );
           })}
         </div>
@@ -155,7 +154,7 @@ export default function Skills() {
         {/* Growth Mindset Note */}
         <div className="mt-12 p-4 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 text-center max-w-2xl mx-auto">
           <p className="text-xs text-zinc-400">
-            <span className="text-blue-400 font-mono font-medium">Note:</span> Proficiencies reflect real-world university coursework, personal implementations, and active exploration. Configurable levels avoid inflated &apos;expert&apos; claims in favor of verifiable technical ability.
+            <span className="text-blue-400 font-mono font-medium">Note:</span> Proficiencies reflect genuine university coursework and active software implementations without inflated claims.
           </p>
         </div>
       </div>

@@ -3,35 +3,32 @@
 import React from 'react';
 import { User, Target, Lightbulb, Compass, Code, Brain, Globe, ShieldCheck } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Card } from '@/components/ui/Card';
 
 export default function About() {
   const { data } = usePortfolio();
   const { personalInfo } = data;
 
   const coreInterests = [
-    { title: 'Artificial Intelligence', desc: 'LLM agents, automated reasoning & applied machine learning', icon: Brain, color: 'text-purple-400' },
-    { title: 'Modern Web Engineering', desc: 'Performant full-stack apps with Next.js, React & TypeScript', icon: Code, color: 'text-blue-400' },
-    { title: 'Data Science & Analytics', desc: 'Python exploratory data analysis and structured modeling', icon: Compass, color: 'text-cyan-400' },
-    { title: 'Software Engineering', desc: 'Clean architecture, maintainable patterns & robust APIs', icon: ShieldCheck, color: 'text-emerald-400' },
-    { title: 'Open Source & Community', desc: 'IEEE volunteer leadership and collaborative development', icon: Globe, color: 'text-amber-400' },
+    { title: 'Artificial Intelligence', desc: 'Applied machine learning, AI assistants, and automated heuristics', icon: Brain, color: 'text-purple-400' },
+    { title: 'Modern Web Engineering', desc: 'Performant, accessible full-stack platforms with Next.js & React', icon: Code, color: 'text-blue-400' },
+    { title: 'Data Science & Modeling', desc: 'Structured analysis, relational integrity, and Python scripting', icon: Compass, color: 'text-cyan-400' },
+    { title: 'Software Engineering', desc: 'Clean architecture, maintainable contracts, and resilient design', icon: ShieldCheck, color: 'text-emerald-400' },
+    { title: 'Open Source & Community', desc: 'IEEE volunteer leadership and grassroots youth engagement', icon: Globe, color: 'text-amber-400' },
   ];
 
   return (
     <section id="about" className="py-24 relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col items-start mb-16 space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400">
-            <User className="w-3.5 h-3.5" />
-            <span>01 / ABOUT ME</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Engineering with Purpose &amp; Precision
-          </h2>
-          <p className="text-zinc-400 text-sm sm:text-base max-w-2xl">
-            A glimpse into my background, philosophy, and dedication to building intelligent digital solutions.
-          </p>
-        </div>
+        {/* Section Header with reusable primitive */}
+        <SectionHeading
+          badgeText="01 / ABOUT ME"
+          badgeVariant="blue"
+          icon={<User className="w-3.5 h-3.5" />}
+          title="Engineering with Purpose & Precision"
+          subtitle="A background combining undergraduate computing studies, modern full-stack web engineering, and active technology community volunteering."
+        />
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -68,7 +65,7 @@ export default function About() {
           {/* Right Column Cards - Spans 5 cols */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             {/* Philosophy & Approach Card */}
-            <div className="glass-card rounded-3xl p-6 sm:p-8 flex-1">
+            <Card variant="glass" className="p-6 sm:p-8 flex-1">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400">
                   <Lightbulb className="w-5 h-5" />
@@ -81,10 +78,10 @@ export default function About() {
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                 {personalInfo.approach}
               </p>
-            </div>
+            </Card>
 
             {/* Career Goals Card */}
-            <div className="glass-card rounded-3xl p-6 sm:p-8 flex-1">
+            <Card variant="glass" className="p-6 sm:p-8 flex-1">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                   <Target className="w-5 h-5" />
@@ -97,7 +94,7 @@ export default function About() {
               <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
                 {personalInfo.careerGoals}
               </p>
-            </div>
+            </Card>
           </div>
 
           {/* Bottom Card: Professional Interests Banner - Spans all 12 cols */}

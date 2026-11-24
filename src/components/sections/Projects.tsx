@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FolderGit2, ExternalLink, CheckCircle2, Sparkles, Layers, ArrowUpRight } from 'lucide-react';
+import { FolderGit2, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { GithubIcon } from '@/components/icons/SocialIcons';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Card } from '@/components/ui/Card';
 
 export default function Projects() {
   const { data } = usePortfolio();
@@ -21,18 +23,14 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400">
-              <FolderGit2 className="w-3.5 h-3.5" />
-              <span>03 / FEATURED WORK</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Selected Projects &amp; Systems
-            </h2>
-            <p className="text-zinc-400 text-sm sm:text-base max-w-xl">
-              Engineered web applications, academic tools, and intelligent experiments with verifiable code repositories and active deployments.
-            </p>
-          </div>
+          <SectionHeading
+            badgeText="03 / FEATURED WORK"
+            badgeVariant="emerald"
+            icon={<FolderGit2 className="w-3.5 h-3.5" />}
+            title="Featured Projects"
+            subtitle="Software systems, academic platforms, and intelligent automation experiments with confirmed code repositories and active deployments."
+            className="mb-0"
+          />
 
           {/* Category Tabs */}
           <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/80 border border-zinc-800/80 overflow-x-auto scrollbar-none">
@@ -55,9 +53,10 @@ export default function Projects() {
         {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
-            <div
+            <Card
               key={project.id}
-              className="glass-card rounded-3xl p-6 flex flex-col justify-between group hover:border-zinc-700 transition-all duration-300"
+              variant="glass"
+              className="p-6 flex flex-col justify-between group"
             >
               <div>
                 {/* Mockup / Terminal Preview Banner */}
@@ -91,19 +90,17 @@ export default function Projects() {
                   <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400 pt-2 border-t border-zinc-900">
                     <span className="flex items-center gap-1 text-emerald-400">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      {project.liveUrl ? 'Live Production' : 'Repository Active'}
+                      {project.liveUrl ? 'Live Demo' : 'Repository Active'}
                     </span>
-                    <span className="text-zinc-400">Next.js / TS</span>
+                    <span className="text-zinc-500">{project.technologies[0]}</span>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors tracking-tight">
-                      {project.title}
-                    </h3>
-                  </div>
+                  <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors tracking-tight">
+                    {project.title}
+                  </h3>
 
                   <p className="text-xs font-mono text-blue-400 font-medium">
                     {project.tagline}
@@ -116,7 +113,7 @@ export default function Projects() {
                   {/* Feature Highlights */}
                   {project.features && project.features.length > 0 && (
                     <div className="pt-2 space-y-1.5">
-                      <p className="text-[11px] font-mono text-zinc-300 font-medium">Key Features:</p>
+                      <p className="text-[11px] font-mono text-zinc-300 font-medium">Highlights:</p>
                       {project.features.slice(0, 3).map((feat, i) => (
                         <div key={i} className="flex items-start gap-1.5 text-xs text-zinc-400">
                           <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 mt-0.5 shrink-0" />
@@ -164,12 +161,12 @@ export default function Projects() {
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-medium transition-colors"
                     >
                       <GithubIcon className="w-3.5 h-3.5" />
-                      <span>Code Repository</span>
+                      <span>Repository</span>
                     </a>
                   )}
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

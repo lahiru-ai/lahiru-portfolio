@@ -1,18 +1,20 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useState } from 'react';
+import Image from 'next/image';
 import { ArrowRight, Mail, Sparkles, Terminal, Code2, Bot, Award, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/SocialIcons';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { Button } from '@/components/ui/Button';
 
 export default function Hero() {
   const { data } = usePortfolio();
   const { personalInfo } = data;
   const { availability } = personalInfo;
+  const [imageError, setImageError] = useState(false);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-28 pb-16 overflow-hidden">
+    <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-blue-600/15 via-indigo-600/10 to-purple-600/15 blur-[120px] rounded-full pointer-events-none -z-10" />
       <div className="absolute top-1/3 right-10 w-[300px] h-[300px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none -z-10" />
@@ -72,7 +74,7 @@ export default function Hero() {
 
               {/* Subheadline / Intro */}
               <p className="text-sm sm:text-base text-zinc-400 max-w-2xl leading-relaxed font-normal">
-                {personalInfo.subheadline}
+                &ldquo;{personalInfo.subheadline}&rdquo;
               </p>
             </div>
 
@@ -84,11 +86,11 @@ export default function Hero() {
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-900/60 border border-zinc-800 text-xs text-zinc-400">
                 <Code2 className="w-3.5 h-3.5 text-blue-400" />
-                <span>Modern Full-Stack</span>
+                <span>Modern Web &amp; Next.js</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-900/60 border border-zinc-800 text-xs text-zinc-400">
                 <Bot className="w-3.5 h-3.5 text-purple-400" />
-                <span>AI & Automation</span>
+                <span>AI &amp; Automation</span>
               </div>
               <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-zinc-900/60 border border-zinc-800 text-xs text-zinc-400">
                 <Award className="w-3.5 h-3.5 text-amber-400" />
@@ -98,21 +100,15 @@ export default function Hero() {
 
             {/* CTA Buttons & Social Links */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
-              <Link
-                href="#projects"
-                className="group inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 rounded-xl hover:from-blue-500 hover:to-purple-500 shadow-xl shadow-blue-600/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
+              <Button href="#projects" variant="primary" size="lg" className="group">
                 <span>View Projects</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </Button>
 
-              <Link
-                href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-zinc-200 bg-zinc-900/90 hover:bg-zinc-800/90 border border-zinc-700/80 rounded-xl hover:text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
-              >
+              <Button href="#contact" variant="secondary" size="lg">
                 <Mail className="w-4 h-4 text-emerald-400" />
                 <span>Contact Me</span>
-              </Link>
+              </Button>
 
               {/* Direct Social Links */}
               <div className="flex items-center gap-2 pl-2">
@@ -139,7 +135,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Column: Visual Avatar & Tech Card Stack */}
+          {/* Right Column: Visual Avatar with Profile Image support */}
           <div className="lg:col-span-5 flex justify-center">
             <div className="relative w-full max-w-sm sm:max-w-md">
               {/* Outer decorative ring */}
@@ -160,20 +156,32 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Profile Visual representation */}
+                {/* Profile Visual representation: Photo from /images/profile.jpg */}
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className="relative group">
-                    {/* Glowing Avatar Frame */}
-                    <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-700 p-1 shadow-2xl shadow-blue-500/20">
-                      <div className="w-full h-full rounded-2xl bg-zinc-950 flex flex-col items-center justify-center p-3 text-center overflow-hidden relative">
-                        {/* Futuristic Monogram with SVG backdrop */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-blue-600/10 to-transparent pointer-events-none" />
-                        <span className="text-4xl font-extrabold font-mono text-gradient-vibrant tracking-tighter">
-                          LR
-                        </span>
-                        <span className="text-[10px] text-zinc-400 font-mono mt-1 uppercase tracking-widest">
-                          Dev Portfolio
-                        </span>
+                    <div className="w-36 h-36 sm:w-40 sm:h-40 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-700 p-1 shadow-2xl shadow-blue-500/20 overflow-hidden">
+                      <div className="w-full h-full rounded-2xl bg-zinc-950 flex flex-col items-center justify-center text-center overflow-hidden relative">
+                        {!imageError ? (
+                          <Image
+                            src="/images/profile.jpg"
+                            alt="R. J. K. Lahiru Madhushan Ranathunga"
+                            width={160}
+                            height={160}
+                            className="w-full h-full object-cover rounded-2xl"
+                            onError={() => setImageError(true)}
+                            priority
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center p-3 relative">
+                            <div className="absolute inset-0 bg-gradient-to-b from-blue-600/10 to-transparent pointer-events-none" />
+                            <span className="text-4xl font-extrabold font-mono text-gradient-vibrant tracking-tighter">
+                              LR
+                            </span>
+                            <span className="text-[10px] text-zinc-400 font-mono mt-1 uppercase tracking-widest">
+                              Dev Portfolio
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
 

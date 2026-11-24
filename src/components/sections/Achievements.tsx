@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Award, Trophy, Users, BookOpen, CheckCircle, Sparkles, Filter } from 'lucide-react';
+import { Award, CheckCircle } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Card } from '@/components/ui/Card';
 
 export default function Achievements() {
   const { data } = usePortfolio();
@@ -20,18 +22,14 @@ export default function Achievements() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-amber-400">
-              <Award className="w-3.5 h-3.5" />
-              <span>06 / RECOGNITIONS &amp; ENGAGEMENT</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-              Achievements &amp; Activities
-            </h2>
-            <p className="text-zinc-400 text-sm sm:text-base max-w-xl">
-              Authentic leadership appointments, organizing committee contributions, and community honors.
-            </p>
-          </div>
+          <SectionHeading
+            badgeText="06 / RECOGNITIONS & ENGAGEMENT"
+            badgeVariant="amber"
+            icon={<Award className="w-3.5 h-3.5" />}
+            title="Achievements & Activities"
+            subtitle="Authentic leadership appointments, organizing committee responsibilities, and verified university community milestones."
+            className="mb-0"
+          />
 
           {/* Filter pills */}
           <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/80 border border-zinc-800/80">
@@ -54,9 +52,10 @@ export default function Achievements() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredAchievements.map((item) => (
-            <div
+            <Card
               key={item.id}
-              className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between group hover:border-zinc-700/80 transition-all"
+              variant="glass"
+              className="p-6 sm:p-7 flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -73,7 +72,7 @@ export default function Achievements() {
                 </h3>
 
                 <p className="text-xs font-mono text-zinc-400">
-                  Issued by: <span className="text-zinc-200">{item.issuer}</span>
+                  Entity: <span className="text-zinc-200">{item.issuer}</span>
                 </p>
 
                 <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
@@ -92,7 +91,7 @@ export default function Achievements() {
                   </span>
                 )}
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

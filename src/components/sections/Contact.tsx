@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Mail, MapPin, Send, CheckCircle2, Copy, Check, AlertCircle, ArrowUpRight } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/SocialIcons';
 import { usePortfolio } from '@/context/PortfolioContext';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { Card } from '@/components/ui/Card';
 
 export default function Contact() {
   const { data } = usePortfolio();
@@ -16,7 +18,7 @@ export default function Contact() {
     message: '',
   });
 
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'preparing' | 'opened' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
 
@@ -26,10 +28,10 @@ export default function Contact() {
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic validation
+    // Validation
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error');
       setErrorMessage('Please fill in all required fields (Name, Email, Message).');
@@ -39,46 +41,46 @@ export default function Contact() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email.trim())) {
       setStatus('error');
-      setErrorMessage('Please provide a valid email address.');
+      setErrorMessage('Please enter a valid email address.');
       return;
     }
 
-    setStatus('submitting');
+    setStatus('preparing');
     setErrorMessage('');
 
-    // Simulate sending message with realistic delay
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    } catch {
-      setStatus('error');
-      setErrorMessage('Failed to send message. Please reach out directly via email.');
-    }
+    // Open native email client with pre-filled content (honest & functional without fake backend claims)
+    const emailSubject = encodeURIComponent(
+      formData.subject.trim() || `Portfolio Contact from ${formData.name.trim()}`
+    );
+    const emailBody = encodeURIComponent(
+      `Hello Lahiru,\n\n${formData.message.trim()}\n\nBest regards,\n${formData.name.trim()}\n${formData.email.trim()}`
+    );
+
+    const mailtoUrl = `mailto:${personalInfo.socialLinks.email}?subject=${emailSubject}&body=${emailBody}`;
+
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+      setStatus('opened');
+    }, 500);
   };
 
   return (
     <section id="contact" className="py-24 relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col items-start mb-16 space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-xs font-mono text-rose-400">
-            <Mail className="w-3.5 h-3.5" />
-            <span>07 / GET IN TOUCH</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
-            Let&apos;s Build Something Intelligent
-          </h2>
-          <p className="text-zinc-400 text-sm sm:text-base max-w-2xl">
-            Whether you have a technical opportunity, an AI/web project collaboration, or want to connect within the developer community, my inbox is open.
-          </p>
-        </div>
+        <SectionHeading
+          badgeText="07 / GET IN TOUCH"
+          badgeVariant="blue"
+          icon={<Mail className="w-3.5 h-3.5" />}
+          title="Connect & Collaborate"
+          subtitle="Whether you have an upcoming project, software engineering opportunity, or technical inquiry, feel free to reach out."
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Direct Info & Social Cards */}
           <div className="lg:col-span-5 space-y-6">
             {/* Email Card with Quick Copy */}
-            <div className="glass-card rounded-3xl p-6 sm:p-7 space-y-4">
+            <Card variant="glass" className="p-6 sm:p-7 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-wider text-zinc-400">
                   Direct Email
@@ -111,12 +113,12 @@ export default function Contact() {
               </div>
 
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Feel free to send proposals, tech queries, or internship inquiries directly to my primary address.
+                Primary contact address. Monitored regularly for technical and academic correspondence.
               </p>
-            </div>
+            </Card>
 
             {/* Connect on Profiles */}
-            <div className="glass-card rounded-3xl p-6 sm:p-7 space-y-4">
+            <Card variant="glass" className="p-6 sm:p-7 space-y-4">
               <span className="text-xs font-mono uppercase tracking-wider text-zinc-400">
                 Network &amp; Profiles
               </span>
@@ -166,43 +168,43 @@ export default function Contact() {
                   <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
               </div>
-            </div>
+            </Card>
 
-            {/* Location & Response Note */}
+            {/* Location Note */}
             <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-800/70 flex items-start gap-3">
               <MapPin className="w-4 h-4 text-rose-400 mt-1 shrink-0" />
               <div className="text-xs text-zinc-400 space-y-1">
                 <p className="font-medium text-zinc-200">Location: {personalInfo.location}</p>
-                <p>Typically replies within 24 hours. Open to remote collaborations worldwide.</p>
+                <p>Based in Sri Lanka (GMT+5:30). Open to remote collaborations worldwide.</p>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Interactive Contact Form */}
-          <div className="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8">
+          {/* Right Column: Contact Form */}
+          <Card variant="glass" className="lg:col-span-7 p-6 sm:p-8">
             <h3 className="text-lg font-bold text-white mb-2">
-              Send a Direct Message
+              Compose Direct Message
             </h3>
             <p className="text-xs text-zinc-400 mb-6 font-mono">
-              Fill out the form below and I&apos;ll get back to you promptly.
+              Fill in the details below to generate a pre-formatted message directly to my inbox.
             </p>
 
-            {status === 'success' ? (
+            {status === 'opened' ? (
               <div className="p-8 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-center space-y-3 animate-in fade-in duration-300">
                 <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <h4 className="text-base font-semibold text-emerald-300">
-                  Message Dispatched Successfully!
+                  Email Client Opened
                 </h4>
                 <p className="text-xs text-zinc-300 max-w-sm mx-auto">
-                  Thank you for reaching out. I have received your message and will reply via email shortly.
+                  Your message has been pre-filled in your default email client. You can send it directly or copy the address above.
                 </p>
                 <button
                   onClick={() => setStatus('idle')}
                   className="mt-4 px-4 py-2 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-900 border border-zinc-800 rounded-xl"
                 >
-                  Send Another Message
+                  Write Another Message
                 </button>
               </div>
             ) : (
@@ -264,7 +266,7 @@ export default function Contact() {
                   <textarea
                     required
                     rows={5}
-                    placeholder="Tell me about your project, idea, or role..."
+                    placeholder="Describe your inquiry, project scope, or opportunity..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full px-4 py-3 text-xs rounded-xl bg-zinc-900/80 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
@@ -273,24 +275,24 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={status === 'submitting'}
+                  disabled={status === 'preparing'}
                   className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 transition-all active:scale-[0.99] disabled:opacity-50"
                 >
-                  {status === 'submitting' ? (
+                  {status === 'preparing' ? (
                     <span className="flex items-center gap-2">
                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Sending Message...
+                      Opening Email Client...
                     </span>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />
-                      <span>Transmit Message</span>
+                      <span>Send via Email Client</span>
                     </>
                   )}
                 </button>
               </form>
             )}
-          </div>
+          </Card>
         </div>
       </div>
     </section>
