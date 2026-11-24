@@ -113,8 +113,8 @@ The application comes pre-architected for a seamless administrative workflow:
 ### 2. Installation
 ```bash
 # Clone the repository
-git clone https://github.com/lahiru-ai/portfolio.git
-cd portfolio
+git clone https://github.com/lahiru-ai/lahiru-portfolio.git
+cd lahiru-portfolio
 
 # Install dependencies
 npm install
@@ -137,9 +137,9 @@ npm run start
 
 ## 🚢 Deploying to Vercel
 
-1. Push your repository to GitHub (`github.com/lahiru-ai/portfolio`).
+1. Push your repository to GitHub (`github.com/lahiru-ai/lahiru-portfolio`).
 2. Log in to [Vercel](https://vercel.com) and click **"Add New Project"**.
-3. Import your GitHub repository.
+3. Import your GitHub repository (`lahiru-portfolio`).
 4. Framework preset will automatically detect **Next.js**.
 5. Click **Deploy**. Vercel will build and deploy the production site within seconds with global CDN caching.
 
