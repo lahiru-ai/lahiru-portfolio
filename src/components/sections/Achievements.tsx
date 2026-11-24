@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Award, CheckCircle } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -32,14 +33,14 @@ export default function Achievements() {
           />
 
           {/* Filter pills */}
-          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/80 border border-zinc-800/80">
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/80 border border-zinc-800/80 backdrop-blur-md">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-200 ${
+                className={`px-3 py-1.5 text-xs font-medium rounded-xl transition-all duration-200 cursor-pointer ${
                   filter === cat
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
@@ -50,50 +51,61 @@ export default function Achievements() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredAchievements.map((item) => (
-            <Card
-              key={item.id}
-              variant="glass"
-              className="p-6 sm:p-7 flex flex-col justify-between"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    {item.category}
-                  </span>
-                  <span className="text-xs font-mono text-zinc-400">
-                    {item.date}
-                  </span>
-                </div>
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AnimatePresence>
+            {filteredAchievements.map((item, index) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.45, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                exit={{ opacity: 0, scale: 0.95 }}
+              >
+                <Card
+                  variant="glass"
+                  className="p-6 sm:p-7 flex flex-col justify-between h-full hover:border-zinc-700/80 transition-colors group"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                        {item.category}
+                      </span>
+                      <span className="text-xs font-mono text-zinc-400">
+                        {item.date}
+                      </span>
+                    </div>
 
-                <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-amber-300 transition-colors">
-                  {item.title}
-                </h3>
+                    <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-amber-300 transition-colors">
+                      {item.title}
+                    </h3>
 
-                <p className="text-xs font-mono text-zinc-400">
-                  Entity: <span className="text-zinc-200">{item.issuer}</span>
-                </p>
+                    <p className="text-xs font-mono text-zinc-400">
+                      Entity: <span className="text-zinc-200">{item.issuer}</span>
+                    </p>
 
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
-                  {item.description}
-                </p>
-              </div>
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pt-1">
+                      {item.description}
+                    </p>
+                  </div>
 
-              <div className="mt-6 pt-4 border-t border-zinc-800/60 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
-                  <CheckCircle className="w-3.5 h-3.5" />
-                  <span>Verified Engagement</span>
-                </div>
-                {item.badge && (
-                  <span className="text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded bg-zinc-800">
-                    {item.badge}
-                  </span>
-                )}
-              </div>
-            </Card>
-          ))}
-        </div>
+                  <div className="mt-6 pt-4 border-t border-zinc-800/60 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 text-[11px] text-emerald-400 font-mono">
+                      <CheckCircle className="w-3.5 h-3.5" />
+                      <span>Verified Engagement</span>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[10px] font-mono text-zinc-400 px-2 py-0.5 rounded bg-zinc-800">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

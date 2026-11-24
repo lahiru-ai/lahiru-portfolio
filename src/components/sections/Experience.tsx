@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -12,6 +13,9 @@ export default function Experience() {
 
   return (
     <section id="experience" className="py-24 relative scroll-mt-20">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-10 w-96 h-96 bg-blue-600/10 rounded-full blur-[130px] pointer-events-none -z-10" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <SectionHeading
@@ -24,8 +28,15 @@ export default function Experience() {
 
         {/* Timeline Layout */}
         <div className="relative border-l border-zinc-800/90 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
-          {experience.map((item) => (
-            <div key={item.id} className="relative group">
+          {experience.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative group"
+            >
               {/* Timeline Indicator Dot */}
               <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-6 h-6 rounded-full bg-zinc-950 border-2 border-blue-500/80 group-hover:border-blue-400 flex items-center justify-center shadow-lg shadow-blue-500/20 transition-all">
                 <span className="w-2 h-2 rounded-full bg-blue-400 group-hover:scale-125 transition-transform" />
@@ -34,7 +45,7 @@ export default function Experience() {
               {/* Experience Card */}
               <Card
                 variant="glass"
-                className="p-6 sm:p-8 space-y-4 hover:border-zinc-700/80"
+                className="p-6 sm:p-8 space-y-4 hover:border-zinc-700/80 transition-colors"
               >
                 {/* Header row */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-800/80 pb-4">
@@ -94,7 +105,7 @@ export default function Experience() {
                   </div>
                 )}
               </Card>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

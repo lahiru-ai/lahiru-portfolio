@@ -22,8 +22,8 @@ export const initialPortfolioData: PortfolioData = {
     },
     socialLinks: {
       github: "https://github.com/lahiru-ai",
-      linkedin: "https://linkedin.com/in/lahiru-ai",
-      email: "lahirumadhushan.dev@gmail.com"
+      linkedin: "https://www.linkedin.com/in/lahiru-m-ranathunga",
+      email: "lahirumadhushan566@gmail.com"
     }
   },
   skills: [

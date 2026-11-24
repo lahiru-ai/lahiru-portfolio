@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Sliders, ExternalLink, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { usePortfolio } from '@/context/PortfolioContext';
 
 const NAV_ITEMS = [
@@ -16,7 +16,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar() {
-  const { data, setIsAdminOpen } = usePortfolio();
+  const { data } = usePortfolio();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -110,17 +110,6 @@ export default function Navbar() {
 
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center gap-3">
-              {/* Admin Studio Trigger */}
-              <button
-                onClick={() => setIsAdminOpen(true)}
-                title="Portfolio Admin & Studio Configuration"
-                aria-label="Open Admin Configuration Studio"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-400 hover:text-white rounded-lg bg-zinc-900/60 hover:bg-zinc-800/80 border border-zinc-800/80 hover:border-zinc-700 transition-all"
-              >
-                <Sliders className="w-3.5 h-3.5 text-blue-400" />
-                <span>Admin Studio</span>
-              </button>
-
               {/* Contact Me CTA */}
               <Link
                 href="#contact"
@@ -131,14 +120,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="flex md:hidden items-center gap-2">
-              <button
-                onClick={() => setIsAdminOpen(true)}
-                title="Admin Studio"
-                className="p-2 text-zinc-400 hover:text-white rounded-lg bg-zinc-900/80 border border-zinc-800"
-              >
-                <Sliders className="w-4 h-4 text-blue-400" />
-              </button>
+            <div className="flex md:hidden items-center">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 text-zinc-300 hover:text-white rounded-lg bg-zinc-900/80 border border-zinc-800"
@@ -175,24 +157,14 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="flex flex-col gap-3 pt-6 border-t border-zinc-800/80">
+          <div className="pt-6 border-t border-zinc-800/80">
             <Link
               href="#contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-3 text-center text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-600/20"
+              className="w-full block py-3 text-center text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-600/20"
             >
               Get in Touch
             </Link>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                setIsAdminOpen(true);
-              }}
-              className="w-full py-2.5 text-center text-xs font-medium text-zinc-400 hover:text-white bg-zinc-900/80 border border-zinc-800 rounded-xl flex items-center justify-center gap-2"
-            >
-              <Sliders className="w-3.5 h-3.5 text-blue-400" />
-              <span>Launch Admin Studio</span>
-            </button>
           </div>
         </div>
       )}

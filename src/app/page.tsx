@@ -10,16 +10,19 @@ import Education from '@/components/sections/Education';
 import Achievements from '@/components/sections/Achievements';
 import Contact from '@/components/sections/Contact';
 import BackToTop from '@/components/ui/BackToTop';
-import AdminPreviewModal from '@/components/admin/AdminPreviewModal';
+import ClientExperience from '@/components/layout/ClientExperience';
 
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#070709] text-zinc-100 flex flex-col selection:bg-blue-600/30 selection:text-white">
+      {/* 3D Global Ambient Particle Background & Interactive Custom Cursor */}
+      <ClientExperience />
+
       {/* Top Navbar */}
       <Navbar />
 
       {/* Main Content Sections */}
-      <main className="flex-1 w-full">
+      <main className="flex-1 w-full relative z-10">
         <Hero />
         <About />
         <Skills />
@@ -35,7 +38,6 @@ export default function Home() {
 
       {/* Floating Utilities */}
       <BackToTop />
-      <AdminPreviewModal />
     </div>
   );
 }

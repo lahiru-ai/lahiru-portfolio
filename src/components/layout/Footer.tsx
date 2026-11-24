@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Mail, Heart, Globe, ArrowUpRight, Sliders } from 'lucide-react';
+import { Mail, Heart, Globe, ArrowUpRight } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons/SocialIcons';
 import { usePortfolio } from '@/context/PortfolioContext';
 
 export default function Footer() {
-  const { data, setIsAdminOpen } = usePortfolio();
+  const { data } = usePortfolio();
   const [sriLankaTime, setSriLankaTime] = useState<string>('');
 
   useEffect(() => {
@@ -103,10 +103,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Socials & Studio */}
+          {/* Socials */}
           <div className="space-y-3">
             <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold">
-              Connect & Architecture
+              Connect & Social
             </h4>
             <div className="flex flex-col gap-2.5 text-xs">
               <a
@@ -136,14 +136,6 @@ export default function Footer() {
                 <Mail className="w-4 h-4 text-emerald-400" />
                 <span className="truncate">{data.personalInfo.socialLinks.email}</span>
               </a>
-
-              <button
-                onClick={() => setIsAdminOpen(true)}
-                className="mt-3 inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-blue-400 hover:text-blue-300 hover:border-zinc-700 transition-all text-left"
-              >
-                <Sliders className="w-3.5 h-3.5" />
-                <span>Future Admin Dashboard Studio</span>
-              </button>
             </div>
           </div>
         </div>

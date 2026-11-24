@@ -89,3 +89,374 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* ==========================================================================
+   Cyberpunk Glitch Text Animation
+   Target: Hero Section Name ("R. J. K. Lahiru Madhushan Ranathunga")
+   ========================================================================== */
+
+.cyber-glitch-group {
+  transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-glitch-group:hover {
+  filter: drop-shadow(-1px 0 8px rgba(0, 229, 255, 0.35)) drop-shadow(1px 0 8px rgba(139, 92, 246, 0.35));
+}
+
+.cyber-glitch-token {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
+  will-change: transform;
+  animation: cyberGlitchBaseShake 7s infinite ease-in-out;
+}
+
+.cyber-glitch-token::before,
+.cyber-glitch-token::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  font: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  background: transparent !important;
+  -webkit-background-clip: unset !important;
+  opacity: 0;
+  will-change: transform, opacity, clip-path;
+}
+
+/* Cyan RGB Split (#00E5FF) */
+.cyber-glitch-token::before {
+  color: #00E5FF;
+  -webkit-text-fill-color: #00E5FF;
+  mix-blend-mode: screen;
+  z-index: 1;
+  animation: cyberGlitchIdleCyan 7s infinite linear;
+}
+
+/* Purple RGB Split (#8B5CF6) */
+.cyber-glitch-token::after {
+  color: #8B5CF6;
+  -webkit-text-fill-color: #8B5CF6;
+  mix-blend-mode: screen;
+  z-index: 2;
+  animation: cyberGlitchIdlePurple 7s infinite linear;
+}
+
+/* Hover Interaction: Faster, pronounced glitch + subtle electrical jitter */
+.cyber-glitch-group:hover .cyber-glitch-token,
+.cyber-glitch-token:hover {
+  animation: cyberGlitchHoverBaseShake 0.9s infinite steps(2, jump-none);
+}
+
+.cyber-glitch-group:hover .cyber-glitch-token::before,
+.cyber-glitch-token:hover::before {
+  animation: cyberGlitchHoverCyan 0.9s infinite steps(2, jump-none);
+}
+
+.cyber-glitch-group:hover .cyber-glitch-token::after,
+.cyber-glitch-token:hover::after {
+  animation: cyberGlitchHoverPurple 0.9s infinite steps(2, jump-none);
+}
+
+/* --------------------------------------------------------------------------
+   Intermittent Idle Glitch Keyframes (7s cycle, dormant 86% of the time)
+   -------------------------------------------------------------------------- */
+
+@keyframes cyberGlitchBaseShake {
+  0%, 85.9%, 89.6%, 93.8%, 96.6%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  86.8% {
+    transform: translate3d(-0.6px, 0, 0);
+  }
+  87.6% {
+    transform: translate3d(0.6px, 0, 0);
+  }
+  88.4% {
+    transform: translate3d(-0.4px, 0, 0);
+  }
+  94.4% {
+    transform: translate3d(0.5px, 0, 0);
+  }
+  95.4% {
+    transform: translate3d(-0.5px, 0, 0);
+  }
+}
+
+@keyframes cyberGlitchIdleCyan {
+  0%, 85.9% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  86.5% {
+    opacity: 0.85;
+    transform: translate3d(-2px, -0.5px, 0);
+    clip-path: inset(14% 0 68% 0);
+  }
+  87.3% {
+    opacity: 0.95;
+    transform: translate3d(1.5px, 0.5px, 0);
+    clip-path: inset(62% 0 16% 0);
+  }
+  88.1% {
+    opacity: 0.75;
+    transform: translate3d(-2.8px, 0, 0);
+    clip-path: inset(32% 0 44% 0);
+  }
+  88.9% {
+    opacity: 0.6;
+    transform: translate3d(1.2px, -0.5px, 0);
+    clip-path: inset(82% 0 4% 0);
+  }
+  89.6% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  89.7%, 93.9% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  94.5% {
+    opacity: 0.85;
+    transform: translate3d(-1.8px, 0, 0);
+    clip-path: inset(42% 0 32% 0);
+  }
+  95.3% {
+    opacity: 0.7;
+    transform: translate3d(2px, 0, 0);
+    clip-path: inset(8% 0 78% 0);
+  }
+  96.0% {
+    opacity: 0.5;
+    transform: translate3d(-0.8px, 0, 0);
+    clip-path: inset(68% 0 12% 0);
+  }
+  96.7% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  96.8%, 100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+}
+
+@keyframes cyberGlitchIdlePurple {
+  0%, 85.9% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  86.5% {
+    opacity: 0.85;
+    transform: translate3d(2.5px, 0.5px, 0);
+    clip-path: inset(65% 0 12% 0);
+  }
+  87.3% {
+    opacity: 0.95;
+    transform: translate3d(-1.8px, -0.5px, 0);
+    clip-path: inset(18% 0 60% 0);
+  }
+  88.1% {
+    opacity: 0.7;
+    transform: translate3d(2.2px, 0, 0);
+    clip-path: inset(48% 0 28% 0);
+  }
+  88.9% {
+    opacity: 0.6;
+    transform: translate3d(-1.2px, 0.5px, 0);
+    clip-path: inset(6% 0 80% 0);
+  }
+  89.6% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  89.7%, 93.9% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  94.5% {
+    opacity: 0.8;
+    transform: translate3d(1.8px, 0, 0);
+    clip-path: inset(22% 0 54% 0);
+  }
+  95.3% {
+    opacity: 0.75;
+    transform: translate3d(-2px, 0, 0);
+    clip-path: inset(72% 0 8% 0);
+  }
+  96.0% {
+    opacity: 0.5;
+    transform: translate3d(1.2px, 0, 0);
+    clip-path: inset(36% 0 46% 0);
+  }
+  96.7% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+  96.8%, 100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+    clip-path: inset(50% 0 50% 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Interactive Hover Glitch Keyframes (Dynamic, responsive, active RGB split)
+   -------------------------------------------------------------------------- */
+
+@keyframes cyberGlitchHoverBaseShake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-0.8px, 0, 0);
+  }
+  40% {
+    transform: translate3d(0.8px, 0, 0);
+  }
+  60% {
+    transform: translate3d(-0.5px, 0, 0);
+  }
+  80% {
+    transform: translate3d(0.5px, 0, 0);
+  }
+}
+
+@keyframes cyberGlitchHoverCyan {
+  0% {
+    opacity: 0.9;
+    transform: translate3d(-2.8px, 0, 0);
+    clip-path: inset(12% 0 65% 0);
+  }
+  15% {
+    opacity: 0.8;
+    transform: translate3d(2.2px, -0.5px, 0);
+    clip-path: inset(48% 0 25% 0);
+  }
+  30% {
+    opacity: 0.95;
+    transform: translate3d(-3.2px, 0.5px, 0);
+    clip-path: inset(75% 0 8% 0);
+  }
+  45% {
+    opacity: 0.7;
+    transform: translate3d(1.4px, 0, 0);
+    clip-path: inset(28% 0 55% 0);
+  }
+  60% {
+    opacity: 0.85;
+    transform: translate3d(-2.2px, -0.5px, 0);
+    clip-path: inset(60% 0 15% 0);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translate3d(2.6px, 0, 0);
+    clip-path: inset(5% 0 78% 0);
+  }
+  90% {
+    opacity: 0.75;
+    transform: translate3d(-1.5px, 0.5px, 0);
+    clip-path: inset(38% 0 42% 0);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translate3d(-2.8px, 0, 0);
+    clip-path: inset(12% 0 65% 0);
+  }
+}
+
+@keyframes cyberGlitchHoverPurple {
+  0% {
+    opacity: 0.9;
+    transform: translate3d(2.8px, 0, 0);
+    clip-path: inset(58% 0 18% 0);
+  }
+  15% {
+    opacity: 0.8;
+    transform: translate3d(-2.2px, 0.5px, 0);
+    clip-path: inset(22% 0 52% 0);
+  }
+  30% {
+    opacity: 0.95;
+    transform: translate3d(3.2px, -0.5px, 0);
+    clip-path: inset(10% 0 72% 0);
+  }
+  45% {
+    opacity: 0.7;
+    transform: translate3d(-1.8px, 0, 0);
+    clip-path: inset(80% 0 6% 0);
+  }
+  60% {
+    opacity: 0.85;
+    transform: translate3d(2.2px, 0.5px, 0);
+    clip-path: inset(35% 0 45% 0);
+  }
+  75% {
+    opacity: 0.9;
+    transform: translate3d(-2.6px, 0, 0);
+    clip-path: inset(70% 0 12% 0);
+  }
+  90% {
+    opacity: 0.75;
+    transform: translate3d(1.5px, -0.5px, 0);
+    clip-path: inset(15% 0 68% 0);
+  }
+  100% {
+    opacity: 0.9;
+    transform: translate3d(2.8px, 0, 0);
+    clip-path: inset(58% 0 18% 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Respect prefers-reduced-motion
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cyber-glitch-token,
+  .cyber-glitch-token::before,
+  .cyber-glitch-token::after,
+  .cyber-glitch-group,
+  .cyber-glitch-group:hover,
+  .cyber-glitch-group:hover .cyber-glitch-token,
+  .cyber-glitch-group:hover .cyber-glitch-token::before,
+  .cyber-glitch-group:hover .cyber-glitch-token::after,
+  .cyber-glitch-token:hover,
+  .cyber-glitch-token:hover::before,
+  .cyber-glitch-token:hover::after {
+    animation: none !important;
+    transform: none !important;
+    opacity: 0 !important;
+    clip-path: none !important;
+    filter: none !important;
+    text-shadow: none !important;
+    transition: none !important;
+  }
+
+  .cyber-glitch-token {
+    opacity: 1 !important;
+  }
+}
